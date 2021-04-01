@@ -1,0 +1,10 @@
+{
+  "name": "agenciafmd/starter-tray",
+  "description": "MIXD Internet - Starter Tray",
+  "keywords": [
+    "framework",
+    "tray"
+  ],
+  "license": "MIT",
+  "type": "project"
+}
