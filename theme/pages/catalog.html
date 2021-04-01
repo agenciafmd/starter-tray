@@ -1,0 +1,97 @@
+{% element 'snippets/page-title' {'title': category.name, 'description': category.small_description} %}
+
+<section class="mb-n2">
+    <div class="container">
+        <div class="row align-items-center justify-content-between">
+            <div class="col d-none d-md-block">
+                {% element 'snippets/breadcrumb' %}
+            </div>
+            
+            <div class="col-md-auto py-1q">
+                {% if products|length > 0 %}
+                    <div class="system-filter flex justify-center align-center {{ settings.compare ? 'compare-true' }}">
+                        {% if settings.compare %}
+                            <a href="/loja/comparador.php?loja={{store.id}}&IdDep={{category.id}}" name="bot&atilde;o compare" class="button-compare">{{ Translation("comparar_produto") }}</a>
+                        {% endif %}
+                        
+                        <div class="button-filter">Filtrar</div>
+    
+                        {% element 'snippets/filter' %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="pb-4">
+    <div class="container">
+        <div class="row">
+            {% if settings.col_lateral %}
+                <div class="col-lg-4 col-xl-3 p-0">
+                    <div class="sidebar-category py-2 px-1">
+                        {% element 'smartfilter' %}
+                    </div>
+                </div>
+            {% endif %}
+            
+            <div class="col-lg-8 col-xl-9 pt-2">
+                {% if banner.title %}
+                    <div class="catalog-header">
+                        <div class="banner">
+                            <div class="{{ banners.title.type == 'javascript' ? 'slide-catalog' }}">
+                                {% if banners.title.type == "javascript" %}
+                                <div class="swiper-container">
+                                    <div class="swiper-wrapper">
+                                        {% for slide in banners.title.slides %}
+                                        <div class="item swiper-slide">
+                                            {% if slide.link %}
+                                            <a href="{{ slide.link }}" name="link do slide" target="{{ slide.target }}">
+                                                <img class="swiper-lazy" data-src="{{ slide.image }}" alt="banner">
+                                            </a>
+                                            {% else %}
+                                            <a>
+                                                <img class="swiper-lazy" data-src="{{ slide.image }}" alt="banner">
+                                            </a>
+                                            {% endif %}
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                {% else %}
+                                <div class="item">
+                                    {% if banners.title.link %}
+                                    <a href="{{ banners.title.link }}" name="link do slide" target="{{ banners.title.target }}">
+                                        <img src="{{ banners.title.src }}" alt="banner">
+                                    </a>
+                                    {% else %}
+                                    <a>
+                                        <img src="{{ banners.title.src }}" alt="banner">
+                                    </a>
+                                    {% endif %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+        
+                {% if products|length > 0 %}
+                    <div class="catalog-content">
+                        {% element 'showcase-catalog' {
+                            "products": products
+                        } %}
+                    </div>
+        
+                    <div class="catalog-footer">
+                        {% element 'snippets/paginate' %}
+                    </div>
+                {% else %}
+                    <div class="catalog-empty">
+                        <p>): {{ Translation('nenhum_resultado') }}</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>

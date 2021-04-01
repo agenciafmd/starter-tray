@@ -1,0 +1,7 @@
+<ul>
+    {% for category in categories %}
+        {% if loop.index <= limit or not limit %}
+            <li><a href="{{ category.link }}" name="categoria">{{ category.name }}</a></li>
+        {% endif %}
+    {% endfor %}
+</ul>

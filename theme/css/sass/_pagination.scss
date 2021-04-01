@@ -1,0 +1,9 @@
+.pagination {
+    .page-item {
+        &.disabled .prev,
+        &.disabled .next,
+        a:not(.page-link) {
+            @extend .page-link;
+        }
+    }
+}

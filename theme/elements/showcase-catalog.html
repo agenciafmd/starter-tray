@@ -1,0 +1,12 @@
+{% if products|length > 0 %}
+    <div class="showcase-catalog">
+        <ul class="row mt-n1 mt-sm-n0h mt-md-n1">
+        {% for product in products %}
+            {% set ranking = product.ranking %}
+            <li class="item col-sm-6 col-md-4 col-lg-6 col-xl-4 p-1 p-sm-0h p-md-1 d-flex">
+                {% element 'snippets/product' {"product": product} %}
+            </li>            
+        {% endfor %}
+        </ul>
+    </div>
+{% endif %}

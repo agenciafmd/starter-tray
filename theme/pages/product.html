@@ -1,0 +1,403 @@
+{% set pageTitle = product.name %}
+
+{% for category in categories %}
+    {% if category.id == product.category_id %}
+        {% set pageTitle = category.name %}
+    {% endif %}
+{% endfor %}
+
+{% element 'snippets/page-title' {'title': pageTitle} %}
+
+
+{% if ProgressiveDiscounts and not utils.is_mobile %}
+<div class="banner-header">
+    {% for discount in ProgressiveDiscounts %}
+        {% if discount.banner %}
+            <img src="{{ discount.banner }}" alt="{{ discount.name }}"/>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+
+<section id="product-container" class="produto-wrapper product-detail">
+    <div class="container">
+        {% element 'schema' { "product": product } %}
+        {% element 'snippets/breadcrumb' { "class": 'breadcrumb'} %}
+        <div class="row">
+            <div class="col-md-{{ product.images|length > 1 ? '7' : '6' }}">
+                {% if product.images %}
+                    <div class="box-gallery flex">
+                        {% if product.images|length > 1 %}
+                            <div class="nav-images">
+                                <div class="list">
+                                    {% for images in product.images %}
+                                    <div class="item">
+                                        <div class="box-img index-list {{ loop.index == 1 ? 'active' }}" data-id="{{ loop.index }}">
+                                            <img src="{{ images.medium }}" alt="image">
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div class="image-show {{ product.images|length > 1 ? '' : 'w-100' }}">
+                            {% if product.price_offer and settings.tag_desconto %}
+                            {% set porcentagemDesconto = 100 - ( product.price_offer / product.price ) * 100 %}
+                            {% if porcentagemDesconto < 100 %}
+                            <div class="discount-line">-{{ porcentagemDesconto|number_format }}%</div>
+                            {% endif %}
+                            {% endif %}
+                            {% if product.video %}
+                            <div class="video-button" data-url="{{ product.video }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 314.068 314.068">
+                                    <path d="M293.002,78.53C249.646,3.435,153.618-22.296,78.529,21.068C3.434,64.418-22.298,160.442,21.066,235.534     c43.35,75.095,139.375,100.83,214.465,57.47C310.627,249.639,336.371,153.62,293.002,78.53z M219.834,265.801     c-60.067,34.692-136.894,14.106-171.576-45.973C13.568,159.761,34.161,82.935,94.23,48.26     c60.071-34.69,136.894-14.106,171.578,45.971C300.493,154.307,279.906,231.117,219.834,265.801z M213.555,150.652l-82.214-47.949     c-7.492-4.374-13.535-0.877-13.493,7.789l0.421,95.174c0.038,8.664,6.155,12.191,13.669,7.851l81.585-47.103     C221.029,162.082,221.045,155.026,213.555,150.652z"></path>
+                                </svg>
+                                <span>V&Iacute;DEO</span></div>
+                            {% endif %}
+                            <div class="list">
+                                {% for images in product.images %}
+                                <div class="item">
+                                    <div class="box-img index-list {{ loop.index == 1 ? 'active' }}" data-id="{{ loop.index }}">
+                                        <div class="zoom">
+                                            <img src="{{ loop.index == 1 ? images.full : asset('img/square.png') }}" data-src="{{ images.full }}" data-lazy="{{ images.full }}" alt="{{ product.name }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-md-5 position-relative mt-2 mt-md-0">
+                <div class="fixed-info">
+                    <div id="loading-product-container" class="load-css">
+                        <div class="icon"></div>
+                    </div>
+                    {% set add = product.additional_button and Image('additional_button') ? 1 : 0 %}
+                    {% if product.featured or product.new or product.free_shipping or ProgressiveDiscounts[0].tag and productHelper.labels() and settings.tag_desconto %}
+                    <div class="list-seal-product flex f-wrap">
+                        {% if product.featured %}<div class="tag featured">Destaque</div>{% endif %}
+                        {% if product.new %}<div class="tag new">Lan&ccedil;amento</div>{% endif %}
+                        {% if product.free_shipping %}<div class="tag shipping">Frete gr&aacute;tis</div>{% endif %}
+                        {% if ProgressiveDiscounts[0].tag %}<div class="tag discount">{{ ProgressiveDiscounts[0].tag }}</div>{% endif %}
+                        {% if add %}
+                        <div class="image-add">
+                            {{ Image('additional_button') }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                    <h1 class="h4 text-uppercase product-name mb-0">{{ product.name }}</h1>
+                    <div class="line-info flex align-center">
+                        {% if product.reference and settings.show_reference %}
+                        <small class="ref opac-50">Referência: {{ product.reference }}</small>
+                        {% endif %}
+                        {% if settings.star_list %}
+                        <div class="list-star flex cursor">
+                            {% element 'snippets/ranking' {
+                            'nota': product.ranking,
+                            'total': true
+                            } %}
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    {% if ProgressiveDiscounts[0].description %}
+                    <div class="progressive">
+                        <p>{{ ProgressiveDiscounts[0].description }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    {% if productHelper.banner() %}
+                    <div class="product-lote">
+                        {{ productHelper.banner() }}
+                    </div>
+                    {% endif %}
+        
+                    {% if  productHelper.icons() %}
+                    <div class="list-icons">
+                        {{ productHelper.icons() }}
+                    </div>
+                    {% endif %}
+        
+                    {% if product.additional_message %}
+                    <div class="info-product">
+                        {{ product.additional_message }}
+                    </div>
+                    {% endif %}
+        
+                    {% if product.availability %}
+                    <span class="availability">Disponibilidade: {{ product.availability }}</span>
+                    {% endif %}
+        
+                    {% if productHelper.bonus() %}
+                        {# productHelper.bonus() #}
+                    {% endif %}
+                    
+                    {{ product.description_small }}
+                    
+                    <form id="form_comprar" method="post" data-app="product.buy-form" data-id="{{ product.id }}" action="{{ links.cart_add ~ product.id }}">
+                        <div class="box-variants">
+                            {{ productHelper.variants() }}
+                        </div>
+                        {{ product.additional_information }}
+                        
+                        {{ productHelper.pricing() }}
+                        
+                        {{ productHelper.gifts() }}
+            
+                        {{ productHelper.kit() }}
+                        
+                        <div class="box-price">
+                            {{ productHelper.form() }}
+                        </div>
+                        
+                        {% if not product.upon_request and product.available and productHelper.wishlist() %}
+                        <div class="wishlist">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -28 512.001 512" width="20" height="20"><path d="m256 455.515625c-7.289062 0-14.316406-2.640625-19.792969-7.4375-20.683593-18.085937-40.625-35.082031-58.21875-50.074219l-.089843-.078125c-51.582032-43.957031-96.125-81.917969-127.117188-119.3125-34.644531-41.804687-50.78125-81.441406-50.78125-124.742187 0-42.070313 14.425781-80.882813 40.617188-109.292969 26.503906-28.746094 62.871093-44.578125 102.414062-44.578125 29.554688 0 56.621094 9.34375 80.445312 27.769531 12.023438 9.300781 22.921876 20.683594 32.523438 33.960938 9.605469-13.277344 20.5-24.660157 32.527344-33.960938 23.824218-18.425781 50.890625-27.769531 80.445312-27.769531 39.539063 0 75.910156 15.832031 102.414063 44.578125 26.191406 28.410156 40.613281 67.222656 40.613281 109.292969 0 43.300781-16.132812 82.9375-50.777344 124.738281-30.992187 37.398437-75.53125 75.355469-127.105468 119.308594-17.625 15.015625-37.597657 32.039062-58.328126 50.167969-5.472656 4.789062-12.503906 7.429687-19.789062 7.429687zm-112.96875-425.523437c-31.066406 0-59.605469 12.398437-80.367188 34.914062-21.070312 22.855469-32.675781 54.449219-32.675781 88.964844 0 36.417968 13.535157 68.988281 43.882813 105.605468 29.332031 35.394532 72.960937 72.574219 123.476562 115.625l.09375.078126c17.660156 15.050781 37.679688 32.113281 58.515625 50.332031 20.960938-18.253907 41.011719-35.34375 58.707031-50.417969 50.511719-43.050781 94.136719-80.222656 123.46875-115.617188 30.34375-36.617187 43.878907-69.1875 43.878907-105.605468 0-34.515625-11.605469-66.109375-32.675781-88.964844-20.757813-22.515625-49.300782-34.914062-80.363282-34.914062-22.757812 0-43.652344 7.234374-62.101562 21.5-16.441406 12.71875-27.894532 28.796874-34.609375 40.046874-3.453125 5.785157-9.53125 9.238282-16.261719 9.238282s-12.808594-3.453125-16.261719-9.238282c-6.710937-11.25-18.164062-27.328124-34.609375-40.046874-18.449218-14.265626-39.34375-21.5-62.097656-21.5zm0 0"/></svg>
+                            {{ productHelper.wishlist() }}
+                        </div>
+                        {% endif %}
+                    </form>
+                    {% if productHelper.shipping() and not product.upon_request %}
+                    <div class="box-frete">
+                        {{ productHelper.shipping() }}
+                        <form class="new-frete row mx-n0h">
+                            <label class="box-left col-auto px-0h d-flex align-items-center">
+                                <span class="text">Calcular frete:</span>
+                                <input type="tel" class="crazy_cep" name="number-frete" minlength="9" required maxlength="9" placeholder="00000-000">
+                            </label>
+                            <div class="col px-0h">
+                                <button class="btn btn-block btn-light px-1" name="calc">Calcular <span class="d-md-none d-xl-inline-block">frete</span> </button>
+                            </div>
+                        </form>
+                        <div class="result"></div>
+                    </div>
+                    {% endif %}
+                    {{ productHelper.social() }}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="py-4 mt-4 bg-light">
+    <div class="container">
+        <ul class="nav nav-pills justify-content-center mb-1 mx-n0h horizontal-scroll-md"
+            id="product-nav-tab"
+            role="tablist">
+            {% for key, tab in productTabs %}
+                {% if (key != 'payment_methods') and (key != 'properties') %}
+                    <li class="nav-item mx-0h" role="presentation">
+                        <a class="nav-link {{ loop.first ? 'active' : '' }}"
+                           id="product-tab-{{ key }}"
+                           data-bs-toggle="pill"
+                           href=" #tab-{{ key }}"
+                           role="tab"
+                           aria-controls="tab-{{ key }}"
+                           aria-selected="{{ loop.first ? 'true' : 'false' }}">
+                            {{ tab.description }}
+                        </a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    
+    <div class="container">
+        <div class="tab-content bg-white shadow p-1h p-lg-3" id="product-tab-content">
+            {% for key, tab in productTabs %}
+                <div class="tab-pane fade {{loop.first ? 'show active' : ''}}"
+                     id="tab-{{ key }}"
+                     role="tabpanel"
+                     aria-labelledby="product-tab-{{ key }}">
+                    {% if (key == 'description') %}
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="title-section"><span>{{ tab.description }}</span></div>
+                                <div class="board_htm">
+                                    {{ product.description ? product.description : product.description_small }}
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mt-2 mt-lg-0">
+                                <div id="ficha" class="section-box">
+                                    <div class="title-section"><span>{{ settings.title_ficha ? settings.title_ficha : 'Ficha t&eacute;cnica' }}</span></div>
+                                    <div class="board_htm">
+                                        <table>
+                                            {% if settings.show_reference %}
+                                            <tr>
+                                                <td>C&oacute;digo</td>
+                                                <td>{{ product.reference ? product.reference : product.id }}</td>
+                                            </tr>
+                                            {% endif %}
+                    
+                                            {% if product.ean %}
+                                            <tr>
+                                                <td>C&oacute;digo de barras</td>
+                                                <td>{{ product.ean }}</td>
+                                            </tr>
+                                            {% endif %}
+                                            {% if settings.show_product_stock %}
+                                            <tr>
+                                                <td>Estoque</td>
+                                                <td>{{ product.stock }}</td>
+                                            </tr>
+                                            {% endif %}
+                                            {% if product.model %}
+                                            <tr>
+                                                <td>Modelo</td>
+                                                <td>{{ product.model }}</td>
+                                            </tr>
+                                            {% endif %}
+                                            {% if product.category_id %}
+                                            {% set Category = Categories({ "id": product.category_id }) %}
+                                            <tr>
+                                                <td>Categoria</td>
+                                                <td>{{ Category.name }}</td>
+                                            </tr>
+                                            {% endif %}
+                                            {% if product.brand %}
+                                            <tr>
+                                                <td>Marca</td>
+                                                <td>{{ product.brand }}</td>
+                                            </tr>
+                                            {% endif %}
+                                            {% if product.included_items %}
+                                            <tr>
+                                                <td>Itens Inclusos</td>
+                                                <td>{{ product.included_items }}</td>
+                                            </tr>
+                                            {% endif  %}
+                                            {% if settings.show_product_warranty %}
+                                            <tr>
+                                                <td>Garantia</td>
+                                                <td>{{ product.warranty }}</td>
+                                            </tr>
+                                            {% endif  %}
+                                            {% if settings.show_release_date %}
+                                            <tr>
+                                                <td>Data de lan&ccedil;amento</td>
+                                                <td>{{ settings.new_release_title }}</td>
+                                            </tr>
+                                            {% endif  %}
+                                            {% if settings.product.availability  %}
+                                            <tr>
+                                                <td>Disponibilidade</td>
+                                                <td>{{ product.availability }}</td>
+                                            </tr>
+                                            {% endif  %}
+                                        </table>
+                                    </div>
+                                </div>
+                                <div id="garantia" class="prodBox" data-url="{{ tab.url ? tab.url }}"></div>
+                                <div data-id="{{ tab.container_id }}"></div>
+                                {{ product.included_items }}
+                            </div>
+                        </div>
+                    {% endif %}
+            
+                    {% if (key == 'comments') %}
+                        <div class="board_htm">
+                            {% element 'product/comments' %}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        {% if productHelper.bundle() %}
+            <div class="compre-junto mb-4">
+                <div class="title-section"><span class="string">Compre Junto</span></div>
+                <div class="product-cross-sell row">
+                    {{ productHelper.bundle() }}
+                </div>
+            </div>
+        {% endif %}
+        <div class="page-info-product m-0 p-0">
+            {{ productTabs.custom.content }}
+            {{ productTabs.downloads.content }}
+        </div>
+    </div>
+</section>
+
+{%
+    set moreTabs = {
+        'related': product.related_products,
+        'visited': settings.history_position
+    }
+%}
+{%
+    set moreTabsTitles = {
+        'related': settings.title_related ? settings.title_related : "Produtos relacionados",
+        'visited': 'Sugestões para você'
+    }
+%}
+
+{% if true in moreTabs %}
+    <section class="pb-4">
+        <div class="container">
+            <ul class="nav nav-pills justify-content-center mt-4 mb-2 mx-n0h horizontal-scroll-md"
+                id="more-nav-tab"
+                role="tablist">
+                {% set firstToShow = true %}
+                {% for tab, val in moreTabs %}
+                    {% if (val is iterable and val|length) or (val is not iterable and val > 0) %}
+                        <li class="nav-item mx-0h" role="presentation">
+                            <a class="nav-link {{ loop.first or firstToShow ? 'active' : '' }}"
+                               id="more-tab-{{ tab }}"
+                               data-bs-toggle="pill"
+                               href=" #more-{{ tab }}"
+                               role="tab"
+                               aria-controls="more-{{ tab }}"
+                               aria-selected="{{ loop.first or firstToShow ? 'true' : 'false' }}">
+                                {{ moreTabsTitles[ tab ] }}
+                            </a>
+                        </li>
+                        {% set firstToShow = false %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="w-100 border-top"></div>
+        <div class="container">
+            <div class="tab-content" id="more-tab-content">
+                {% set firstToShow = true %}
+                {% for tab, val in moreTabs %}
+                    {% if val|length %}
+                        <div class="tab-pane fade {{loop.first or firstToShow ? 'show active' : ''}}"
+                             id="more-{{ tab }}"
+                             role="tabpanel"
+                             aria-labelledby="more-tab-{{ tab }}">
+                            
+                            {% if tab == 'related' %}
+                                <div id="prognoos_lsi"></div>
+                                <div class="product-related">
+                                    <div class="section-showcase">
+                                        {% element 'showcase' {
+                                            "products": product.related_products,
+                                            "showcaseTitle": '',
+                                            "slide": true,
+                                        } %}
+                                    </div>
+                                </div>
+                            {% elseif tab == 'visited' %}
+                                <div class="visited-section section-showcase">
+                                    <div class="showcase list-slide pb-md-4 pb-lg-0">
+                                        <div class="list-append"></div>
+                                        <div class="prev arrow-icon"></div>
+                                        <div class="next arrow-icon"></div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                        {% set firstToShow = false %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endif %}

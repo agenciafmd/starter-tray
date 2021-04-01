@@ -1,0 +1,29 @@
+{% if banners.extra4 or banners.extra5 or banners.extra6 %}
+<div class="section-banners" data-length="">
+
+    {% if banners.extra4 %}
+    <div class="item">
+        <a{{ banners.extra4.link ? ' href="'~banners.extra4.link~'" ' }} name="banner list" target="{{ banners.extra4.target }}">
+            <img class="lazyload" data-src="{{ banners.extra4.src }}" alt="{{ banners.extra4.alt }}">
+        </a>
+    </div>
+    {% endif %}
+
+    {% if banners.extra5 %}
+    <div class="item">
+        <a{{ banners.extra5.link ? ' href="'~banners.extra5.link~'" ' }} name="banner list" target="{{ banners.extra5.target }}">
+            <img class="lazyload" data-src="{{ banners.extra5.src }}" alt="{{ banners.extra5.alt }}">
+        </a>
+    </div>
+    {% endif %}
+
+    {% if banners.extra6 %}
+    <div class="item">
+        <a{{ banners.extra6.link ? ' href="'~banners.extra6.link~'" ' }} name="banner list" target="{{ banners.extra6.target }}">
+            <img class="lazyload" data-src="{{ banners.extra6.src }}" alt="{{ banners.extra6.alt }}">
+        </a>
+    </div>
+    {% endif %}
+ 
+</div>
+{% endif %}

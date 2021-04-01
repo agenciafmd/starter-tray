@@ -1,0 +1,77 @@
+{% if banner.home or banners.extra1 %}
+    <div class="banner-home">
+        
+        {% if banners.extra1 and utils.is_mobile %}
+            
+            {% if banners.extra1.type == 'image' %}
+    
+                <div class="banner-full">
+                    <a{{ banners.extra1.link ? ' href="'~banners.extra1.link~'" ' }} target="{{ banners.extra1.target }}" name="banner home">
+                        <img src="{{ banners.extra1.src }}" alt="{{ banners.extra1.alt }}">
+                    </a>
+                </div>
+    
+            {% else %}
+            
+                <div class="banner-full" data-config='{"time": 5000, "fade": {{ settings.fade ? "true" : "false" }} }'>
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+    
+                            {% for slide in banners.extra1.slides %}
+                            <div class="swiper-slide">
+                                <a {{ slide.link ? ' href="'~slide.link~'" ' }} target="{{ slide.target }}"  name="banner home">
+                                    <img class="swiper-lazy" data-src="{{ slide.image }}" alt="{{ slide.label }}">
+                                </a>
+                            </div>
+                            {% endfor %}
+                            
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                    
+                </div>
+    
+            {% endif %}
+    
+        {% else%}
+    
+            {% if banners.home.type == 'image' %}
+    
+                <div class="banner-full">
+                    <a{{ banners.home.link ? ' href="'~banners.home.link~'" ' }} target="{{ banners.home.target }}"  name="banner home">
+                        <img src="{{ banners.home.src }}" alt="{{ banners.home.alt }}">
+                    </a>
+                </div>
+    
+            {% else %}
+    
+                <div class="banner-full" data-config='{"stop": {{ settings.stop_hover ? "true" : "false" }}, "time": {{ settings.time_slide ? settings.time_slide : 5000 }}, "fade": {{ settings.fade ? "true" : "false" }} }'>
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+    
+                            {% for slide in banners.home.slides %}
+                            <div class="swiper-slide">
+                                <a {{ slide.link ? ' href="'~slide.link~'" ' }} target="{{ slide.target }}"  name="banner home">
+                                    <img class="swiper-lazy" data-src="{{ slide.image }}" alt="{{ slide.label }}">
+                                </a>
+                            </div>
+                            {% endfor %}
+                            
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                    
+                </div>
+    
+            {% endif %}
+    
+        {% endif %}
+        
+        <a href="#content-home" class="scroll-down">
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17.9999 26.64C17.7116 26.64 17.4599 26.5317 17.2433 26.3166L2.12334 11.1966C1.69163 10.7649 1.69163 10.08 2.12334 9.68485C2.55506 9.25314 3.23992 9.25314 3.63506 9.68485L17.9998 24.0481L32.3631 9.68485C32.7948 9.25314 33.4796 9.25314 33.8748 9.68485C34.3065 10.1166 34.3065 10.8014 33.8748 11.1966L18.7548 26.3166C18.5396 26.5317 18.2879 26.64 17.9996 26.64H17.9999Z" fill="white"/>
+            </svg>
+        </a>
+    </div>
+
+{% endif %}    

@@ -1,0 +1,148 @@
+<div class="header">
+    <div class="bg">
+        <div class="line flex align-center justify-content-xl-between container-xl {% if 'home' in pages.current %} banner-home {% endif %}">
+            <div class="menu">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            
+            {% if settings.header_ic_search %}
+            <div class="search">
+                <label class="header-link" for="input-search">
+                    <img class="ic ic-search" src="{{ themePath ~ settings.header_ic_search }}?{{ utils.assets_version }}" alt="icon">
+                    <span>{{ settings.text_busca ? settings.text_busca : 'Busca' }}</span>
+                </label>
+                <div class="modal-white modal-search not-width">
+                    <form class="search-header" action="{{ links.search }}" method="get" data-search="suggestion">
+                        <input type="hidden" name="loja" value="{{ store.id }}">
+                        <input id="input-search" class="input-search" placeholder="O que voc&ecirc; procura?" spellcheck="false" autocomplete="off" autocorrect="off" data-input="suggestion" type="text" name="palavra_busca">
+                        <button class="button-search" name="busca">
+                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21">
+                                <path d="M21.582 19.639l-5.449-5.449a8.965 8.965 0 1 0-1.943 1.943l5.449 5.449zM1.374 8.931a7.557 7.557 0 1 1 7.557 7.557 7.566 7.566 0 0 1-7.557-7.557z" />
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if settings.header_ic_wishlist %}
+                <a href="#" class="header-link">
+                    <img class="ic ic-heart" src="{{ themePath ~ settings.header_ic_wishlist }}?{{ utils.assets_version }}" alt="icon">
+                    <span>Favoritos</span>
+                </a>
+            {% endif %}
+    
+            <div class="space d-none d-lg-block"></div>
+            <a class="logo" href="{{ store.url }}" name="logo">
+                {% if settings.logo %}
+                    <img src="{{ themePath }}{{ settings.logo }}" alt="{{ store.name }}">
+                {% else %}
+                    <img src="{{ asset('img/logo.svg') }}" alt="{{ store.name }}">
+                {% endif %}
+                
+                {% if 'home' in pages.current %}
+                    <h1 class="title-store">{{ store.name }}</h1>
+                {% else %}
+                    <div class="title-store">{{ store.name }}</div>
+                {% endif %}
+            </a>
+            <div class="space"></div>
+
+            {#
+            <div class="account">
+                {% if settings.header_ic_help and not settings.header_default %}
+                <img class="icon-user" src="{{ themePath ~ settings.header_ic_help }}?{{ utils.assets_version }}" alt="icon">
+                {% else %}
+                <svg class="icon-user" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+                    <path d="M26.948 12.168v-1.23a11.239 11.239 0 0 0-2.931-7.711A10.11 10.11 0 0 0 16.514 0H15.5A10.11 10.11 0 0 0 8 3.227a11.239 11.239 0 0 0-2.931 7.711v1.23a4.415 4.415 0 0 0-4.114 4.4v1.923a4.41 4.41 0 0 0 4.4 4.4h2.48a.809.809 0 0 0 .807-.807v-9.123a.809.809 0 0 0-.807-.807H6.679v-1.216c0-5.318 3.792-9.324 8.813-9.324h1.015c5.029 0 8.813 4.007 8.813 9.324v1.217h-1.155a.809.809 0 0 0-.807.807v9.116a.809.809 0 0 0 .807.807h1.129c-.329 4.208-3.227 5.183-4.571 5.405a2.837 2.837 0 0 0-2.7-1.956H16.01a2.834 2.834 0 0 0 0 5.667h2.024a2.837 2.837 0 0 0 2.729-2.084 7.631 7.631 0 0 0 2.736-.934 7.121 7.121 0 0 0 3.415-6.1 4.408 4.408 0 0 0 4.134-4.4v-1.925a4.392 4.392 0 0 0-4.1-4.39zm-19.906 9.1H5.368a2.792 2.792 0 0 1-2.79-2.79v-1.92a2.792 2.792 0 0 1 2.79-2.79h1.674zm10.992 9.116H16.01a1.217 1.217 0 0 1 0-2.434h2.024a1.217 1.217 0 0 1 0 2.434zm11.408-11.903a2.792 2.792 0 0 1-2.79 2.79h-1.674v-7.5h1.674a2.792 2.792 0 0 1 2.79 2.79z"/>
+                </svg>                    
+                {% endif %}
+                <span>{{ settings.text_ajuda ? settings.text_ajuda : 'SAC' }}</span>
+                <div class="modal-white not-width">
+                    <div class="line-options flex">
+                        {% if settings.phone %}
+                        <div class="box-contact">
+                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+                                <path d="M26.948 12.168v-1.23a11.239 11.239 0 0 0-2.931-7.711A10.11 10.11 0 0 0 16.514 0H15.5A10.11 10.11 0 0 0 8 3.227a11.239 11.239 0 0 0-2.931 7.711v1.23a4.415 4.415 0 0 0-4.114 4.4v1.923a4.41 4.41 0 0 0 4.4 4.4h2.48a.809.809 0 0 0 .807-.807v-9.123a.809.809 0 0 0-.807-.807H6.679v-1.216c0-5.318 3.792-9.324 8.813-9.324h1.015c5.029 0 8.813 4.007 8.813 9.324v1.217h-1.155a.809.809 0 0 0-.807.807v9.116a.809.809 0 0 0 .807.807h1.129c-.329 4.208-3.227 5.183-4.571 5.405a2.837 2.837 0 0 0-2.7-1.956H16.01a2.834 2.834 0 0 0 0 5.667h2.024a2.837 2.837 0 0 0 2.729-2.084 7.631 7.631 0 0 0 2.736-.934 7.121 7.121 0 0 0 3.415-6.1 4.408 4.408 0 0 0 4.134-4.4v-1.925a4.392 4.392 0 0 0-4.1-4.39zm-19.906 9.1H5.368a2.792 2.792 0 0 1-2.79-2.79v-1.92a2.792 2.792 0 0 1 2.79-2.79h1.674zm10.992 9.116H16.01a1.217 1.217 0 0 1 0-2.434h2.024a1.217 1.217 0 0 1 0 2.434zm11.408-11.903a2.792 2.792 0 0 1-2.79 2.79h-1.674v-7.5h1.674a2.792 2.792 0 0 1 2.79 2.79z"/>
+                            </svg>
+                            <div class="title">Precisa de ajuda?</div>
+                            <div class="option">
+                                <div class="value">Atendimento por Telefone</div>
+                                {% set tellink = tel|replace({'(': '', ')': '', ' ':'', '-': ''}) %}
+                                <a href="tel:{{ tellink }}" name="phone" class="content">{{ settings.phone }}</a>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if settings.rastreio %}
+                            {% element 'snippets/correios' %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            #}
+
+            <div class="header-link">
+                {% if settings.header_ic_account and not settings.header_default %}
+                <img class="ic ic-user" src="{{ themePath ~ settings.header_ic_account }}?{{ utils.assets_version }}" alt="icon">
+                {% else %}
+                <svg class="ic ic-user" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26">
+                    <path d="M13 0a13 13 0 1 0 13 13A13.015 13.015 0 0 0 13 0zm0 24.917a11.88 11.88 0 0 1-8.942-4.067c.062-.038.125-.079.187-.111A19.753 19.753 0 0 1 13 18.417a19.755 19.755 0 0 1 8.755 2.323c.062.032.125.073.187.111A11.88 11.88 0 0 1 13 24.917zm9.251-5.141A20.837 20.837 0 0 0 13 17.333a20.834 20.834 0 0 0-9.251 2.443 4.31 4.31 0 0 0-.374.22 11.91 11.91 0 1 1 21.542-7 11.837 11.837 0 0 1-2.291 7 4.306 4.306 0 0 0-.375-.22z"/>
+                    <path d="M13 3.792a6.229 6.229 0 1 0 6.229 6.229A6.236 6.236 0 0 0 13 3.792zm0 11.375a5.146 5.146 0 1 1 5.146-5.146A5.152 5.152 0 0 1 13 15.167z"/>
+                </svg>
+                {% endif %}
+                <span class="tray-hide" data-logged-user="false">{{ settings.text_account ? settings.text_account : 'Minha conta' }}</span>
+                <span class="tray-hide user-name" data-logged-user="true">Ol&aacute;, <span data-customer="name"></span></span>
+                <div class="modal-white tray-hide" data-logged-user="false">
+                    <a class="btn btn-primary btn-block mb-1h" href="{{ links.login }}" name="login">Entrar</a>
+                    <span class="step"><span class="bg">ou</span></span>
+                    <a class="register" href="{{ links.register }}" name="register">Cliente novo? Cadastre-se</a>
+                </div>
+                <div class="modal-white tray-hide" data-logged-user="true">
+                    <a class="btn btn-primary btn-block" href="{{ links.central }}" name="account">Minha conta</a>
+                    <hr>
+                    <a class="btn btn-danger btn-block" href="{{ links.logout }}" name="logout">Sair</a>
+                </div>
+            </div>
+            <div class="cart-header">
+                <div class="header-link">
+                    {% if settings.header_ic_cart and not settings.header_default %}
+                    <img class="ic ic-cart" src="{{ themePath ~ settings.header_ic_cart }}?{{ utils.assets_version }}" alt="icon">
+                    {% else %}
+                    <svg class="ic ic-cart"  xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26">
+                        <path d="M23.208 5.417h-4.791v-3.25A2.169 2.169 0 0 0 16.25 0h-6.5a2.169 2.169 0 0 0-2.167 2.167v3.25H2.792a.541.541 0 0 0-.542.542v17.874A2.169 2.169 0 0 0 4.417 26h17.166a2.169 2.169 0 0 0 2.167-2.167V5.958a.541.541 0 0 0-.542-.541zM8.667 2.167A1.084 1.084 0 0 1 9.75 1.083h6.5a1.084 1.084 0 0 1 1.083 1.083v3.25H8.667zm14 21.667a1.084 1.084 0 0 1-1.083 1.083H4.417a1.084 1.084 0 0 1-1.083-1.083v-2.167h19.333zm0-3.25H3.333V6.5h4.25v1.625a.542.542 0 0 0 1.083 0V6.5h8.667v1.625a.542.542 0 0 0 1.083 0V6.5h4.25v14.083z" />
+                    </svg>
+                    {% endif %}
+                    <span>Sacola (<span data-cart="amount"></span>)</span>
+                </div>
+
+                <div class="cart-sidebar flex flex-column">
+                    <div class="header-cart">Minha Sacola</div>
+                    <div class="content-cart flex-grow flex flex-column justify-between empty">
+                        <div class="list">
+                            <div class="error">
+                                <div class="text">Sacola Vazia</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-cart">
+                        <div class="text-cart-info flex align-center justify-end">
+                            <div class="total"><span>Total:</span> <span class="value"></span></div>
+                        </div>
+                        <div class="row mx-n0h mt-1">
+                            <div class="col px-0h">
+                                <a class="btn btn-block btn-primary" href="{{ links.cart }}" rel="nofollow">Ver minha sacola</a>
+                            </div>
+                            <div class="col px-0h">
+                                <a class="btn btn-block btn-secondary buy" href="{{ store.secure_url }}" rel="nofollow">Fechar pedido</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="shadow-cart-header"></div>
+            </div>
+        </div>
+    </div>
+    {% element 'snippets/menu' %}
+</div>

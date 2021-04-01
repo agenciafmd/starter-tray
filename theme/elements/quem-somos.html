@@ -1,0 +1,112 @@
+<section class="bg-light">
+    <div class="container">
+        <div class="breadcrumb-container py-md-1"></div>
+        {% if settings.pagina_quem_somos_img %}
+            <img loading="lazy"
+                 src="{{ themePath ~ settings.pagina_quem_somos_img }}?{{ utils.assets_version }}"
+                 alt="{{ title }}"
+                 title="{{ title }}"
+                 class="w-100 mb-n3 mb-md-n6 mb-lg-n10">
+        {% endif %}
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8 mb-4 mb-md-8 px-2 px-md-1">
+                <div class="bg-white py-lg-5 py-md-3 px-lg-6 px-md-4 p-1h p-md-2 shadow-sm text-center">
+                    <h2>{{ title }}</h2>
+                    <p>{{ settings.pagina_quem_somos_texto }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{%
+    set infoTabs = {
+        'qualidade': settings.pagina_quem_somos_qualidade,
+        'garantia': settings.pagina_quem_somos_garantia
+    }
+%}
+{%
+    set infoTabsTitles = {
+        'qualidade': "Qualidade",
+        'garantia': "Garantia"
+    }
+%}
+
+{% if settings.pagina_quem_somos_info and true in infoTabs %}
+    <section class="pb-4">
+        <div class="container">
+            <ul class="nav nav-pills justify-content-center py-2 mx-n0h"
+                id="info-nav-tab"
+                role="tablist">
+                {% set firstToShow = true %}
+                {% for tab, val in infoTabs %}
+                    {% if val %}
+                        <li class="nav-item mx-0h" role="presentation">
+                            <a class="nav-link {{ loop.first or firstToShow ? 'active' : '' }}"
+                               id="info-tab-{{ tab }}"
+                               data-bs-toggle="pill"
+                               href=" #info-{{ tab }}"
+                               role="tab"
+                               aria-controls="info-{{ tab }}"
+                               aria-selected="{{ loop.first or firstToShow ? 'true' : 'false' }}">
+                                {{ infoTabsTitles[ tab ] }}
+                            </a>
+                        </li>
+                        {% set firstToShow = false %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="w-100 border-top mb-2"></div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-10 col-lg-8 text-center">
+                    <div class="tab-content" id="info-tab-content">
+                        {% set firstToShow = true %}
+                        {% for tab, val in infoTabs %}
+                            {% if val|length %}
+                                <div class="tab-pane fade {{loop.first or firstToShow ? 'show active' : ''}}"
+                                     id="info-{{ tab }}"
+                                     role="tabpanel"
+                                     aria-labelledby="info-tab-{{ tab }}">
+                                    <p>{{  val }}</p>
+                                </div>
+                                {% set firstToShow = false %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endif %}
+
+{% if settings.pagina_quem_somos_extra %}
+<section class="bg-light py-4">
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+            {% if settings.pagina_quem_somos_extra_img %}
+                <div class="col-10 col-md-5 col-lg-3 mb-2 mb-md-0">
+                    <div class="img-rounded-border">
+                        <img loading="lazy"
+                             src="{{ themePath ~ settings.pagina_quem_somos_extra_img }}?{{ utils.assets_version }}"
+                             alt="{{ pagina_quem_somos_extra_titulo }}"
+                             title="{{ pagina_quem_somos_extra_titulo }}"
+                             class="img-fluid">
+                    </div>
+                </div>
+            {% endif %}
+            {% if settings.pagina_quem_somos_extra_titulo or settings.pagina_quem_somos_extra_texto %}
+                <div class="col-md-7 text-center text-md-start">
+                    {% if settings.pagina_quem_somos_extra_titulo %}
+                        <h3>{{ settings.pagina_quem_somos_extra_titulo }}</h3>
+                    {% endif %}
+                    {% if settings.pagina_quem_somos_extra_texto %}
+                        <p>{{ settings.pagina_quem_somos_extra_texto }}</p>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endif %}

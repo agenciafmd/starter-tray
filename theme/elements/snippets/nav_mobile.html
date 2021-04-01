@@ -1,0 +1,172 @@
+<div class="nav-mobile flex flex-column">
+    <div class="header-nav">
+        <div class="line flex align-center">
+            <a class="logo" href="{{ store.url }}" name="logo">
+                {% if settings.logo %}
+                <img src="{{ themePath }}{{ settings.logo }}" alt="{{ store.name }}">
+                {% else %}
+                <img src="{{ asset('img/logo.svg') }}" alt="{{ store.name }}">
+                {% endif %}
+            </a>
+            <div class="close-nav">
+                <img src="{{ themePath ~ settings.mais_img }}?{{ utils.assets_version }}" alt="fechar menu">
+                {#
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 32">
+                    <g transform="translate(0 -5)">
+                        <g transform="translate(0 5.018)">
+                            <path d="M11.863 19.928a.954.954 0 0 1 .954-.954h18.326L27.083 15a.9.9 0 0 1 0-1.3.954.954 0 0 1 1.349.022l6.113 6.125a.964.964 0 0 1 0 1.358l-6.114 6.114a.954.954 0 0 1-1.35 0 1.067 1.067 0 0 1 0-1.44l4.909-5H12.818a.954.954 0 0 1-.955-.951z" transform="translate(-11.863 -4.184)"/>
+                            <path d="M1.213 28.282V22.6a.954.954 0 1 1 1.908 0v5.677c0 1.284.971 1.774 2.166 1.774h12.4c1.139 0 2.6-.43 2.6-1.774V4.552a2.9 2.9 0 0 0-2.6-2.644h-12.4c-1.237 0-2.166 1.378-2.166 2.644V10.2a.954.954 0 1 1-1.908 0V4.552C1.213 2.224 2.99 0 5.287 0h12.4A4.816 4.816 0 0 1 22.2 4.552v23.73c0 2.2-2.076 3.683-4.512 3.683H5.287c-2.459 0-4.074-1.48-4.074-3.683z" transform="translate(8.091)"/>
+                        </g>
+                    </g>
+                </svg>
+                #}
+            </div>
+        </div>
+    </div>
+    <div class="content-nav flex-grow text-center pt-2">
+        <ul class="list-nav row justify-content-center mb-2">
+            {% for level1 in categories %}
+            <li class="col-auto p-0">
+                <a href="{{ level1.link }}" name="space" class="{{ level1.images and settings.icon_menu ? 'space' }} {{ level1.children and settings.category_nivel ? 'sub' }}">
+                    {% if level1.images and settings.icon_menu %}
+                    <div class="icon flex align-center justify-center">
+                        <img src="{{ level1.images[0] }}" alt="{{ level1.name }}">
+                    </div>
+                    {% endif %}
+                    <span class="text">{{ level1.name }}</span>
+                    {% if level1.children and settings.category_nivel %}
+                    <svg class="ico" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 284.929 284.929"><path d="M282.082,76.511l-14.274-14.273c-1.902-1.906-4.093-2.856-6.57-2.856c-2.471,0-4.661,0.95-6.563,2.856L142.466,174.441
+                        L30.262,62.241c-1.903-1.906-4.093-2.856-6.567-2.856c-2.475,0-4.665,0.95-6.567,2.856L2.856,76.515C0.95,78.417,0,80.607,0,83.082
+                        c0,2.473,0.953,4.663,2.856,6.565l133.043,133.046c1.902,1.903,4.093,2.854,6.567,2.854s4.661-0.951,6.562-2.854L282.082,89.647
+                        c1.902-1.903,2.847-4.093,2.847-6.565C284.929,80.607,283.984,78.417,282.082,76.511z"/></svg>
+                    {% endif %}
+                </a>
+                {% if level1.children and settings.category_nivel %}
+                <ul>
+                    <li>
+                        <a href="{{ level1.link }}" name="ver categoria" >Ver categoria</a>
+                    </li>
+                {% for level2 in level1.children %}
+                <li>
+                    <a class="{{ level2.children ? 'sub' }}" name="level dois"  href="{{ level2.link }}">
+                        {{ level2.name }}
+                        {% if level2.children %}
+                        <svg class="ico" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 284.929 284.929"><path d="M282.082,76.511l-14.274-14.273c-1.902-1.906-4.093-2.856-6.57-2.856c-2.471,0-4.661,0.95-6.563,2.856L142.466,174.441
+                            L30.262,62.241c-1.903-1.906-4.093-2.856-6.567-2.856c-2.475,0-4.665,0.95-6.567,2.856L2.856,76.515C0.95,78.417,0,80.607,0,83.082
+                            c0,2.473,0.953,4.663,2.856,6.565l133.043,133.046c1.902,1.903,4.093,2.854,6.567,2.854s4.661-0.951,6.562-2.854L282.082,89.647
+                            c1.902-1.903,2.847-4.093,2.847-6.565C284.929,80.607,283.984,78.417,282.082,76.511z"/></svg>
+                        {% endif %}
+                    </a>
+                    {% if level2.children %}
+                    <ul>
+                        <li>
+                            <a href="{{ level2.link }}" name="ver categorias" >Ver categoria</a>
+                        </li>
+                        {% for level3 in level2.children %}
+                        <li>
+                            <a href="{{ level3.link }}" name="level 3" >{{ level3.name }}</a>
+                        </li>
+                        {% endfor %}
+                      
+                    </ul>
+                    {% endif %}
+                </li>
+                {% endfor %}
+                
+            </ul>
+            {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+        
+        {% if settings.header_ic_search %}
+            <form class="search-header" action="{{ links.search }}" method="get" data-search="suggestion">
+                <input type="hidden" name="loja" value="{{ store.id }}">
+                <input id="input-search-mobile" class="input-search form-control" placeholder="O que voc&ecirc; procura?" spellcheck="false" autocomplete="off" autocorrect="off" data-input="suggestion" type="text" name="palavra_busca">
+                <button class="button-search" name="busca">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21">
+                        <path d="M21.582 19.639l-5.449-5.449a8.965 8.965 0 1 0-1.943 1.943l5.449 5.449zM1.374 8.931a7.557 7.557 0 1 1 7.557 7.557 7.566 7.566 0 0 1-7.557-7.557z" />
+                    </svg>
+                </button>
+            </form>
+        {% endif %}
+        
+        <ul class="list-nav mb-2">
+            <li class="w-100">
+                <a href="{{ links.login }}" class="account tray-hide" data-logged-user="false">Login</a>
+                <a href="{{ links.central }}" class="tray-hide" data-logged-user="true">Ol&aacute;, <span data-customer="name"></span></a>
+                <a href="{{ links.central }}" class="tray-hide" data-logged-user="true">Minha conta</a>
+                {#<a href="{{ links.logout }}" class="tray-hide sair" data-logged-user="true"> - Sair</a>#}
+            </li>
+            <li class="w-100">
+                <a href="{{ links.cart }}" rel="nofollow">Sacola</a>
+            </li>
+            <li class="w-100">
+                <a href="{{ links.cart }}" rel="nofollow">Favoritos</a>
+            </li>
+        </ul>
+    
+        <ul class="list-nav">
+            {% for custom in pages.custom %}
+            <li><a href="{{ custom.url }}" title="{{ custom.name }}" class="text-truncate">{{ custom.name }}</a></li>
+            {% endfor %}
+        
+            <li>
+                <a href="{{ links.contact }}" title="contatos" class="text-truncate">Contato</a>
+            </li>
+        </ul>
+    </div>
+    {#
+    <div class="contact">
+        {% if settings.phone %}
+        <div class="box-contact flex align-center">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+                <path d="M26.948 12.168v-1.23a11.239 11.239 0 0 0-2.931-7.711A10.11 10.11 0 0 0 16.514 0H15.5A10.11 10.11 0 0 0 8 3.227a11.239 11.239 0 0 0-2.931 7.711v1.23a4.415 4.415 0 0 0-4.114 4.4v1.923a4.41 4.41 0 0 0 4.4 4.4h2.48a.809.809 0 0 0 .807-.807v-9.123a.809.809 0 0 0-.807-.807H6.679v-1.216c0-5.318 3.792-9.324 8.813-9.324h1.015c5.029 0 8.813 4.007 8.813 9.324v1.217h-1.155a.809.809 0 0 0-.807.807v9.116a.809.809 0 0 0 .807.807h1.129c-.329 4.208-3.227 5.183-4.571 5.405a2.837 2.837 0 0 0-2.7-1.956H16.01a2.834 2.834 0 0 0 0 5.667h2.024a2.837 2.837 0 0 0 2.729-2.084 7.631 7.631 0 0 0 2.736-.934 7.121 7.121 0 0 0 3.415-6.1 4.408 4.408 0 0 0 4.134-4.4v-1.925a4.392 4.392 0 0 0-4.1-4.39zm-19.906 9.1H5.368a2.792 2.792 0 0 1-2.79-2.79v-1.92a2.792 2.792 0 0 1 2.79-2.79h1.674zm10.992 9.116H16.01a1.217 1.217 0 0 1 0-2.434h2.024a1.217 1.217 0 0 1 0 2.434zm11.408-11.903a2.792 2.792 0 0 1-2.79 2.79h-1.674v-7.5h1.674a2.792 2.792 0 0 1 2.79 2.79z"/>
+            </svg>
+            <div>
+                <div class="title">Precisa de ajuda?</div>
+                <div class="option">
+                    <div class="value">Atendimento por Telefone</div>
+                    {% set tellink = tel|replace({'(': '', ')': '', ' ':'', '-': ''}) %}
+                    <a href="tel:{{ tellink }}" name="content"  class="content">{{ settings.phone }}</a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <div class="text rastreio">
+        <span class="text-rastreio">Rastrear minha compra</span>
+        {% if settings.rastreio_op == "1" %}
+        <div class="modal-">
+            <form target="_blank" method="get" action="https://www.vaichegar.com.br/">
+                <input autocomplete="off" type="text" name="id" placeholder="Digite seu c&oacute;digo aqui">
+                <button class="rastreio" name="rastreio1">RASTREAR</button>
+            </form>
+        </div>
+    
+        {% elseif settings.rastreio_op == "2" %}
+        <div class="modal-">
+            <form target="_blank" class="rastreie" method="post" data-action="//rastreie.com/{query}" action="">
+                <input autocomplete="off" required type="text" placeholder="Digite seu c&oacute;digo aqui">
+                <button name="rastreio2" class="rastreio">RASTREAR</button>
+            </form>
+        </div>
+        {% elseif settings.rastreio_op == "3" %}
+        <div class="modal-">
+            <form target="_blank" class="rastreie" method="post" data-action="//www.muambator.com.br/pacotes/{query}/detalhes" action="">
+                <input autocomplete="off" required type="text" placeholder="Digite seu c&oacute;digo aqui">
+                <button class="rastreio" name="rastreio3">RASTREAR</button>
+            </form>
+        </div>
+        {% else %}
+        <div class="modal-">
+            <form target="_blank" method="post" action="https://www2.correios.com.br/sistemas/rastreamento/ctrl/ctrlRastreamento.cfm?">
+                <input type="hidden" name="track" value="track">
+                <input autocomplete="off" type="text" name="objetos" placeholder="Digite seu c&oacute;digo aqui">
+                <button class="rastreio" name="rastreio4" >RASTREAR</button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+    #}
+</div>

@@ -1,0 +1,15 @@
+{% if banners.extra7 or banners.extra8 %}
+    {% if banners.extra8 and utils.is_mobile %}
+        <div class="banner-extra">
+            <a{{ banners.extra8.link ? ' href="'~banners.extra8.link~'" ' }} target="{{ banners.extra8.target }}" name="banner line">
+                <img class="lazyload" data-src="{{ banners.extra8.src }}" alt="{{ banners.extra8.alt }}">
+            </a>
+        </div>
+    {% else %}
+        <div class="banner-extra">
+            <a{{ banners.extra7.link ? ' href="'~banners.extra7.link~'" ' }} target="{{ banners.extra7.target }}" name="banner line">
+                <img class="lazyload" data-src="{{ banners.extra7.src }}" alt="{{ banners.extra7.alt }}">
+            </a>
+        </div>
+    {% endif %}
+{% endif %}

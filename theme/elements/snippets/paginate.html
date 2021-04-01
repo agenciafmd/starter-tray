@@ -1,0 +1,32 @@
+<nav>
+    <ul class="pagination justify-content-center">
+        {% if paginate.params.pageCount > 1 %}
+    
+            <li class="page-item{{ not paginate.hasPrev ? ' disabled'}}">
+                {% set prevButton %}
+                    {{ paginate.prev('prevText') }}
+                {% endset %}
+    
+                {{ prevButton | replace({ 'prevText': '<' }) }}
+            </li>
+        
+            {{ paginate.numbers({
+                'modulus' : 3,
+                'separator' : '',
+                'tag' : 'li',
+                'class' : 'page-item',
+                'currentClass' : 'active',
+                'currentTag' : 'a'
+            }) }}
+    
+            <li class="page-item{{ not paginate.hasNext ? ' disabled'}}">
+                {% set nextButton %}
+                    {{ paginate.next('nextText') }}
+                {% endset %}
+    
+                {{ nextButton | replace({ 'nextText': '>' }) }}
+            </li>
+    
+        {% endif %}
+    </ul>
+</nav>

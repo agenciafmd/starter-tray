@@ -1,0 +1,19 @@
+{% for product in products %}
+<a href="{{ product.link }}" name="produto" class="flex product-low">
+	<div class="image">
+		<img class="swiper-lazy" data-src="{{ product.images[0].large }}" alt="{{ product.name }}">
+	</div>
+	<div class="content-full">
+		<span class="title">{{ product.name }}</span>
+		{% if settings.star_list %}
+		<div class="list-star flex">
+			{% element 'snippets/ranking' {
+				'nota': product.ranking,
+			} %}
+		</div>
+		{% endif %}
+		<div class="price">R$ {{ product.price_offer > 0 ? product.price_offer|currency : product.price|currency }}</div>
+		<div class="view">Ver detalhes</div>
+	</div>
+</a>
+{% endfor %}

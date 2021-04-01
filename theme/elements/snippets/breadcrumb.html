@@ -1,0 +1,25 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+    
+        {% if breadcrumb %}
+            {% for item in breadcrumb %}
+                <li class="breadcrumb-item">
+                    <a href="{{ item.link}}" title="{{ item.name }}">{{ item.name }}</a>
+                </li>
+            {% endfor %}
+        {% endif %}
+    
+        {% if pages.current == 'product' %}
+            <li class="breadcrumb-item active" aria-current="page"><span>{{ product.name }}</span></li>
+        {% elseif pages.current == 'catalog'  %}
+            <li class="breadcrumb-item active" aria-current="page"><span>{{ category.name }}</span></li>
+        {% else %}
+            <li class="breadcrumb-item active" aria-current="page">
+                <span>
+                    {{ search.word == '' or search.word == ' ' ? 'Produtos' : search.word }}
+                </span>
+            </li>
+        {% endif %}
+    </ol>
+</nav>

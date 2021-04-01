@@ -1,0 +1,76 @@
+.btn {
+    text-transform: uppercase;
+    
+    &-white {
+        &:hover {
+            color: $white;
+            background: $secondary;
+            border-color: $secondary;
+        }
+    }
+    
+    &-hover-primary:hover {
+        background: $primary;
+        border-color: $primary;
+    }
+    
+    &-wide {
+        padding-right: 4rem;
+        padding-left: 4rem;
+    }
+    
+    &-block {
+        display: block;
+        width: 100%;
+        
+        & + .btn-block {
+            margin-top: 1rem;
+        }
+    }
+}
+
+.add-subtract-buttons {
+    display: flex;
+    flex-direction: column;
+    margin-left: 0.25rem;
+    
+    a {
+        width: 1.25rem;
+        height: 1.375rem;
+        line-height: 1.365rem;
+        text-align: center;
+        border: $border-width solid $border-color;
+        padding: 0;
+        cursor: pointer;
+        
+        &:hover {
+            border-color: $secondary;
+        }
+        
+        &:active {
+            background: $secondary;
+            border-color: $secondary;
+            transition: .1s;
+            
+            svg {
+                fill: #fff;
+                transition: .1s;
+            }
+        }
+        
+        svg {
+            width: 0.6rem;
+            height: 0.6rem;
+            fill: $body-color;
+            transition: .2s;
+        }
+        
+        & + a {
+            margin-top: 0.25rem;
+        }
+        
+        &.add svg{
+            transform: scaleY(-1);
+        }
+    }
+}

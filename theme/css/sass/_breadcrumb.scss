@@ -1,0 +1,26 @@
+.breadcrumb {
+    padding: 2rem 0;
+    flex-wrap: nowrap;
+    
+    &-item {
+        flex: 1 0 0%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        
+        &:not(.active) {
+            flex: 0 0 auto;
+            width: auto;
+            
+            span,
+            a {
+                opacity: .5;
+                transition: .2s;
+                
+                &:hover {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}
